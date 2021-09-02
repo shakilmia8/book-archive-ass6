@@ -1,80 +1,86 @@
 
-// data search function
-loadSearch = () => {
+search = () => {
+    const inputField = document.getElementById("inputField");
+    const bookCard = document.getElementById("bookCard");
+    const totalFound = document.getElementById("found");
+    const emptyInput = document.getElementById("emptyInput");
+    const error = document.getElementById("error");
 
-    // search input
-    const inputSearch = document.getElementById('input-search');
-    const inputText = inputSearch.value;
-    inputSearch.value = '';
+    const inputValue = inputField.value;
+    bookCard.textContent = "";
+    totalFound.innerText = "";
+    error.style.display = "none";
+    if (inputValue === "") {
+        sppiner("hidden");
+        emptyInput.style.display = "block";
+        error.style.display = "none";
+        totalFound.innerText = "";
+        bookCard.textContent = "";
+    } else {
+        sppiner("visible");
+        emptyInput.style.display = "none";
+        //  book url
+        const url = `https://openlibrary.org/search.json?q=${inputValue}`;
 
-    // condition
-    if (inputText === -1) {
-
-    }
-    else {
-
-        // spinner style with js
-        const spinner = document.getElementById('spinner');
-        spinner.style.display = 'block';
-
-        // dynamic search link with fetch & json
-        fetch(`https://openlibrary.org/search.json?q=${inputText}`)
+        fetch(url)
             .then(res => res.json())
+            .then(data => displayBook(data));
+    }
+    inputField.value = "";
+};
 
-            // called function
-            .then(data => displayShow(data.docs.slice(0, 24)));
+displayBook = (data) => {
+    const totalFound = document.getElementById("found");
+    totalFound.innerText = `Book's Result Found For Display: ${data.numFound}`;
+
+    const error = document.getElementById("error");
+    if (data.numFound === 0) {
+        totalFound.innerText = "";
+        error.style.display = "block";
+        sppiner("hidden");
+    } else {
+        error.style.display = "none";
+        const bookCard = document.getElementById("bookCard");
+
+        data?.docs.forEach((item) => {
+            const div = document.createElement("div");
+            console.log(item);
+            //    conditionaly image show
+            item?.cover_i
+                ? (imgUrl = `https://covers.openlibrary.org/b/id/${item?.cover_i}-M.jpg`)
+                : (imgUrl = "images/error.png");
+
+            // conditionaly author
+            item?.author_name ? (auth = item?.author_name.join()) : (auth = "not available");
+            // conditionaly publisher
+            item?.publisher[0] ? (publisher = item?.publisher[0]) : (publisher = "not available");
+            // conditionaly publish date
+            item?.publish_date[0] ? (publishDate = item?.publish_date[0]) : (publishDate = "not available");
+
+            console.log(item?.title);
+
+            div.innerHTML = `
+         <div class="col">
+             <div class="card">
+                  <img height='450px'  src=${imgUrl}  class="card-img-top" alt="...">
+                 <div class="card-body">
+                     <h5 id="author" class="card-title">${item?.title}</h5>
+                     <h6 class="card-text">Author:  <span class ="text-secondary"> ${auth} </span></h6>
+                     <h6 class="card-text">Publisher: <span class ="text-secondary"> ${publisher} </span> </h6>
+                     <h6 class="card-text">Published: <span class ="text-secondary">  ${publishDate} </span> </h6>
+  
+                 </div>
+             </div>
+         </div>
+         `;
+            bookCard.appendChild(div);
+            sppiner("hidden");
+        });
     }
 };
 
-
-// data result show function
-displayShow = docs => {
-
-    // book result count
-    const restultCount = document.getElementById('result-count');
-    restultCount.innerHTML = `
-    <h2 class= "text-danger text-center my-3">Book's Result Found For Display: ${docs.length}</h2>
-    `;
-
-    // display show result
-    const searchResult = document.getElementById('search-result');
-    searchResult.textContent = '';
-
-    // used forEach
-    docs.forEach(doc => {
-
-        // create div tag
-        const div = document.createElement('div');
-        div.textContent = '';
-
-        // class added
-        div.classList.add('col');
-
-        // create img dynamic link
-        const url = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`;
-
-        // set display book card
-        div.innerHTML = `
-        <div class="card h-100">
-            <img src="${url}" class="card-img-top" alt="">
-            <div class="card-body">
-                <h4>Book Name: ${doc.title}</h4>
-                <h5>Book Author: ${doc.author_name ? doc.author_name : 'Not Available'}</h5>
-                <p>First Publish Year: ${doc.first_publish_year ? doc.first_publish_year : 'Not Available'}</p>
-                <p>Publisher: ${doc.publisher}</p>
-            </div>
-        </div>
-        `;
-
-        // added node child in parentchild
-        searchResult.appendChild(div);
-
-        // spinner style with js
-        const spinner = document.getElementById('spinner');
-        spinner.style.display = 'none';
-    });
-
-    // spinner style with js
-    const spinner = document.getElementById('spinner');
-    spinner.style.display = 'none';
+// sppiner function
+sppiner = (property) => {
+    const sppiner = document.getElementById("sppiner");
+    sppiner.style.visibility = property;
 };

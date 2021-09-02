@@ -5,52 +5,78 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOOK</title>
+    <title>Book</title>
 
-    <!-- External css link -->
-    <link rel="stylesheet" href="css/style.css">
-
-    <!-- Bootstrap css link -->
+    <!-- bootstrap  css  link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 
 </head>
 
-<body>
-    <!-- heading for body -->
-    <h2 class="text-center text-primary mt-5">Search your favorite book</h2>
+<body class="mx-5">
+    <header>
+        <h1 class="text-primary text-center mt-3">Search your favorite book</h1>
+    </header>
 
-    <!-- search box & button -->
-    <div class="input-group mb-3 w-50 mx-auto">
-        <input id="input-search" type="text" class="form-control" placeholder="Enter book name for show in display"
-            aria-label="Search book name" aria-describedby="button-search">
-        <button onclick="loadSearch()" class="btn btn-outline-secondary" type="button"
-            id="button-search">Search</button>
-    </div>
+    <main>
+        <!-- search section  -->
+        <section>
+            <div class="container">
+                <form class="col-md-6 m-auto py-5">
+                    <div class="input-group mb-2">
+                        <input id="inputField" type="text" class="form-control"
+                            placeholder="Enter book name for show in display">
+                        <div class="input-group-append">
+                            <button onclick="search()" type="button" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                    <p><span class="text-secondary" id="found"></span></p>
+                </form>
+        </section>
 
-    <!-- display show result count -->
-    <div id="result-count"></div>
 
-    <!-- spinner started -->
-    <div id="spinner" class="text-center my-5">
-        <div class="spinner-border text-info" role="status">
+        <!-- book list show in display  -->
+
+        <section>
+            <div id="bookCard" class="row row-cols-1 row-cols-md-4 g-4">
+            </div>
+        </section>
+
+
+
+
+        <!-- loadding sppiner  -->
+
+        <div style="visibility: hidden" id="sppiner" class="d-flex justify-content-center">
+            <div class="spinner-border text-info" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
-    </div>
 
-    <!-- show result's in display -->
-    <div id="search-result" class="row row-cols-1 row-cols-md-4 g-4">
-    </div>
+        <!-- error message for display show when empty and wrong value entered  -->
+
+        <section>
+            <div style="display:none" id="error" class="text-center d-gri">
+                <h1 class="my-5 d-flex justify-content-center text-danger">
+                    Not found any result. Please enter right value </h1>
+            </div>
+
+            <div style="display:none" id="emptyInput" class="text-center d-gri">
+                <h1 class="my-5 d-flex justify-content-center text-danger">
+                    Please enter any key in search box </h1>
+            </div>
+        </section>
+
+    </main>
 
 
-    <!-- External js link -->
+    <!-- extarnal js link -->
     <script src="js/book.js"></script>
 
-
-    <!-- Bootstrap js link -->
+    <!-- bootstrap js link -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
         crossorigin="anonymous"></script>
-
 </body>
 
 </html>
