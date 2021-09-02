@@ -1,36 +1,59 @@
+
+// data search function
 const loadSearch = () => {
+
+    // search input
     const inputSearch = document.getElementById('input-search');
     const inputText = inputSearch.value;
     inputSearch.value = '';
+
+    // condition
     if (inputText === -1) {
-        // const resultNotFound = document.getElementById('result-not-found');
-        // resultNotFound.innerHTML = `<h1>Result Not Found</h1>`;
+
     }
     else {
+
+        // spinner style with js
         const spinner = document.getElementById('spinner');
         spinner.style.display = 'block';
-        const resultNotFound = document.getElementById('result-not-found');
-        resultNotFound.textContent = '';
+
+        // dynamic search link with fetch & json
         fetch(`https://openlibrary.org/search.json?q=${inputText}`)
             .then(res => res.json())
-            .then(data => displayShow(data.docs));
+
+            // called function
+            .then(data => displayShow(data.docs.slice(0, 24)));
     }
 };
 
+
+// data result show function
 const displayShow = docs => {
+
+    // book result count
     const restultCount = document.getElementById('result-count');
     restultCount.innerHTML = `
-    <h2 class= "text-danger">Book Count Number: ${docs.length}</h2>
+    <h2 class= "text-danger text-center my-3">Book's Result Found For Display: ${docs.length}</h2>
     `;
 
+    // display show result
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
+
+    // used forEach
     docs.forEach(doc => {
-        console.log(doc);
+
+        // create div tag
         const div = document.createElement('div');
-        div.classList.add('col');
         div.textContent = '';
+
+        // class added
+        div.classList.add('col');
+
+        // create img dynamic link
         const url = `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`;
+
+        // set display book card
         div.innerHTML = `
         <div class="card h-100">
             <img src="${url}" class="card-img-top" alt="">
@@ -42,10 +65,16 @@ const displayShow = docs => {
             </div>
         </div>
         `;
+
+        // added node child in parentchild
         searchResult.appendChild(div);
+
+        // spinner style with js
         const spinner = document.getElementById('spinner');
         spinner.style.display = 'none';
     });
+
+    // spinner style with js
     const spinner = document.getElementById('spinner');
     spinner.style.display = 'none';
 };

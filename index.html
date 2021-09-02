@@ -17,22 +17,27 @@
 </head>
 
 <body>
-
+    <!-- heading for body -->
     <h2 class="text-center text-primary mt-5">Search your favorite book</h2>
 
+    <!-- search box & button -->
     <div class="input-group mb-3 w-50 mx-auto">
         <input id="input-search" type="text" class="form-control" placeholder="Search book name"
             aria-label="Search book name" aria-describedby="button-search">
         <button onclick="loadSearch()" class="btn btn-outline-secondary" type="button"
             id="button-search">Search</button>
     </div>
-    <div id="result-not-found"></div>
+
+    <!-- display show result count -->
     <div id="result-count"></div>
+
+    <!-- spinner started -->
     <div id="spinner" class="text-center my-5">
         <div class="spinner-border text-info" role="status">
         </div>
     </div>
 
+    <!-- show result's in display -->
     <div id="search-result" class="row row-cols-1 row-cols-md-4 g-4">
     </div>
 
