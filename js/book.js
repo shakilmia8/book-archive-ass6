@@ -1,6 +1,6 @@
 
 // data search function
-const loadSearch = () => {
+loadSearch = () => {
 
     // search input
     const inputSearch = document.getElementById('input-search');
@@ -28,7 +28,7 @@ const loadSearch = () => {
 
 
 // data result show function
-const displayShow = docs => {
+displayShow = docs => {
 
     // book result count
     const restultCount = document.getElementById('result-count');
