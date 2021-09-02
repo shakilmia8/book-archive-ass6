@@ -13,11 +13,18 @@ const displayShow = docs => {
     docs.forEach(doc => {
         console.log(doc);
         const div = document.createElement('div');
+        div.classList.add('col');
         div.textContent = '';
         div.innerHTML = `
-        <h4>Book Name: ${doc.title}</h4>
-        <h5>Book Author: ${doc.author_name ? doc.author_name : 'Not Available'}</h5>
-        <p>First Publish Year: ${doc.first_publish_year ? doc.first_publish_year : 'Not Available'}</p>
+        <div class="card h-100">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h4>Book Name: ${doc.title}</h4>
+                <h5>Book Author: ${doc.author_name ? doc.author_name : 'Not Available'}</h5>
+                <p>First Publish Year: ${doc.first_publish_year ? doc.first_publish_year : 'Not Available'}</p>
+                <p>Publisher: ${doc.publisher ? doc.publisher : 'Not Available'}</p>
+            </div>
+        </div>
         `;
         searchResult.appendChild(div);
     });
