@@ -2,25 +2,31 @@ const loadSearch = () => {
     const inputSearch = document.getElementById('input-search');
     const inputText = inputSearch.value;
     inputSearch.value = '';
-    fetch(`https://openlibrary.org/search.json?q=${inputText}`)
-        .then(res => res.json())
-        .then(data => displayShow(data.docs));
+    if (inputText === -1) {
+        // const resultNotFound = document.getElementById('result-not-found');
+        // resultNotFound.innerHTML = `<h1>Result Not Found</h1>`;
+    }
+    else {
+        const spinner = document.getElementById('spinner');
+        spinner.style.display = 'block';
+        const resultNotFound = document.getElementById('result-not-found');
+        resultNotFound.textContent = '';
+        fetch(`https://openlibrary.org/search.json?q=${inputText}`)
+            .then(res => res.json())
+            .then(data => displayShow(data.docs));
+    }
 };
 
 const displayShow = docs => {
-    console.log(docs);
     const restultCount = document.getElementById('result-count');
     restultCount.innerHTML = `
-    <h2>Book Count Number: ${docs.length}</h2>
+    <h2 class= "text-danger">Book Count Number: ${docs.length}</h2>
     `;
+
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
     docs.forEach(doc => {
         console.log(doc);
-        const restultShow = document.getElementById('result-show');
-        restultShow.innerHTML = `
-    <h2>Book Display Show Number: ${doc.length}</h2>
-    `;
         const div = document.createElement('div');
         div.classList.add('col');
         div.textContent = '';
@@ -37,5 +43,9 @@ const displayShow = docs => {
         </div>
         `;
         searchResult.appendChild(div);
+        const spinner = document.getElementById('spinner');
+        spinner.style.display = 'none';
     });
+    const spinner = document.getElementById('spinner');
+    spinner.style.display = 'none';
 };
